@@ -4,7 +4,6 @@ public class Constants {
 
 	public static final char CAR_TYPE_DISABLED = 'D';
 	
-	//TODO: Enum
 	public static final char PEDESTRIAN_EXIT = '=';
 	public static final char DISABLED_EMPTY = '@';
 	public static final char DISABLED_NOT_EMPTY = 'D';

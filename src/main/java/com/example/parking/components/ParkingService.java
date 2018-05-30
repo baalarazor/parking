@@ -44,15 +44,8 @@ public class ParkingService {
 		return parkingRepository.findById(id);
 	}
 	
-	public long getAvailableBays(Long parkingId) {
-		//return parkingBayRepository.countByParkingIdAndPedestrianExitFalseAndParkedCarNull(id);
-		Optional<Parking> parkingOpt = parkingRepository.findById(parkingId);
-		 if(parkingOpt.isPresent()) {
-			 Parking parking = parkingOpt.get();
-			 return parking.getBays().stream().filter(pb -> pb.isAvailable()).count();
-		 }
-		 
-		 return 0;
+	public long getAvailableBays(Parking parking) {
+		return parking.getBays().stream().filter(pb -> pb.isAvailable()).count();
 	}
 	
 	public Integer getFirstAvailableBay(Long parkingId, char carType) {

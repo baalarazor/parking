@@ -43,7 +43,7 @@ public class ParkingController {
 		Optional<Parking> parkingOpt = service.getParkingById(id);
 		if(parkingOpt.isPresent()) {
 			Parking parking = parkingOpt.get();
-			long free = service.getAvailableBays(parking.getId());
+			long free = service.getAvailableBays(parking);
 			return Response.ok(free).build();
 		}else {
 			return Response.noContent().build();

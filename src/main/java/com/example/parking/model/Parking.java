@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @ApiModel(description="All details about the parking. ")
@@ -19,6 +20,7 @@ public class Parking {
 	@GeneratedValue
 	private Long id;
 	
+	@ApiModelProperty
 	private Integer size;
 	
 	@OneToMany(mappedBy = "parking", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

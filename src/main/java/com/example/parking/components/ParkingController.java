@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import com.example.parking.components.data.ParkingData;
 import com.example.parking.model.Parking;
 
+import io.swagger.annotations.ApiOperation;
+
 @Component
 @Path("/parking")
 public class ParkingController {
@@ -28,6 +30,7 @@ public class ParkingController {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Create a parking instance")
 	public Response createParking(ParkingData parkingData) {
 		Parking parking = service.createParking(parkingData);
 		return Response.ok(parking).build();

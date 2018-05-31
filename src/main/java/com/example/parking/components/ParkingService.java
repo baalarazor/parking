@@ -48,7 +48,7 @@ public class ParkingService {
 		return parking.getBays().stream().filter(pb -> pb.isAvailable()).count();
 	}
 	
-	public Integer getFirstAvailableBay(Long parkingId, char carType) {
+	private Integer getFirstAvailableBay(Long parkingId, char carType) {
 		 Optional<Parking> parkingOpt = parkingRepository.findById(parkingId);
 		 if(parkingOpt.isPresent()) {
 			 Parking parking = parkingOpt.get();
@@ -61,10 +61,14 @@ public class ParkingService {
 		 return -1;
 	}
 	
-	public void parkCar(Long parkingId, char carType, Integer index) {
-		ParkingBay parkingBay = parkingBayRepository.findByParkingIdAndIndex(parkingId, index);
-		parkingBay.setParkedCar(carType);
-		parkingBayRepository.saveAndFlush(parkingBay);
+	public Integer parkCar(Long parkingId, char carType) {
+		Integer indexToPark = getFirstAvailableBay(parkingId, carType);
+		if(indexToPark > 0) {
+			ParkingBay parkingBay = parkingBayRepository.findByParkingIdAndIndex(parkingId, indexToPark);
+			parkingBay.setParkedCar(carType);
+			parkingBayRepository.saveAndFlush(parkingBay);
+		}
+		return indexToPark;
 	}
 	
 	public boolean unparkCar(Long parkingId, Integer index) {

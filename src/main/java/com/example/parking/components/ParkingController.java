@@ -54,11 +54,8 @@ public class ParkingController {
 	@Path("/{id}/park/{carType}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response parkCar(@PathParam("id") Long id, @PathParam("carType") char carType) {
-		Integer indexToPark = service.getFirstAvailableBay(id, carType);
-		if(indexToPark > 0) {
-			service.parkCar(id, carType, indexToPark);
-		}
-		return Response.ok(indexToPark).build();
+		Integer index = service.parkCar(id, carType);
+		return Response.ok(index).build();
 	}
 	
 	@PUT

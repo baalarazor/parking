@@ -3,14 +3,21 @@ package com.example.parking;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.example.parking.components.ParkingService;
 import com.example.parking.model.Parking;
 import com.example.parking.model.ParkingBuilder;
 
+@SpringBootTest
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ParkingBuilderTest {
 	
-	private final ParkingService service = new ParkingService();
+	@Autowired
+	private ParkingService service;
 
     @Test
     public void testBuildBasicParking() {

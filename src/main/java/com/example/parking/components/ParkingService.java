@@ -44,8 +44,14 @@ public class ParkingService {
 		return parkingRepository.findById(id);
 	}
 	
-	public long getAvailableBays(Parking parking) {
-		return parking.getBays().stream().filter(pb -> pb.isAvailable()).count();
+	public long getAvailableBays(Long parkingId) {
+		Optional<Parking> parkingOpt = getParkingById(parkingId);
+		if(parkingOpt.isPresent()) {
+			Parking parking = parkingOpt.get();
+			return parking.getBays().stream().filter(pb -> pb.isAvailable()).count();
+		}
+		
+		return -1;
 	}
 	
 	private Integer getFirstAvailableBay(Long parkingId, char carType) {
@@ -82,27 +88,39 @@ public class ParkingService {
 		return true;
 	}
 	
-	public String printParking(Parking parking) {
-		StringBuffer strBuffParking = new StringBuffer();
-		int totalSize = parking.getSize()*parking.getSize();
-		boolean needReverse = false;
-		for(int i=0; i<totalSize; i=i+parking.getSize()) {
-			final Integer minIndex = i;
-			final Integer maxIndex = i+parking.getSize()-1;
-			StringBuffer strBuffLane = new StringBuffer();
-			parking.getBays().stream().filter(pb -> (pb.getIndex() >=minIndex && pb.getIndex() <= maxIndex)).sorted(Comparator.comparing(ParkingBay::getIndex)).forEachOrdered(pb -> strBuffLane.append(printBay(parking.getSize(), pb)));
-			
-			if(needReverse) {
-				strBuffLane.reverse();
-				needReverse = false;
-			}else {
-				needReverse = true;
+	public String printParking(Long parkingId) {
+		Optional<Parking> parkingOpt = getParkingById(parkingId);
+		if(parkingOpt.isPresent()) {
+			Parking parking = parkingOpt.get();
+		
+			StringBuffer strBuffParking = new StringBuffer();
+			int totalSize = parking.getSize()*parking.getSize();
+			boolean needReverse = false;
+			for(int i=0; i<totalSize; i=i+parking.getSize()) {
+				final Integer minIndex = i;
+				final Integer maxIndex = i+parking.getSize()-1;
+				StringBuffer strBuffLane = new StringBuffer();
+				parking.getBays().stream().filter(pb -> (pb.getIndex() >=minIndex && pb.getIndex() <= maxIndex)).sorted(Comparator.comparing(ParkingBay::getIndex)).forEachOrdered(pb -> strBuffLane.append(printBay(parking.getSize(), pb)));
+				
+				if(needReverse) {
+					strBuffLane.reverse();
+					needReverse = false;
+				}else {
+					needReverse = true;
+				}
+				
+				if(i+parking.getSize() < totalSize) {
+					strBuffLane.append("\n");
+				}
+				
+				strBuffParking.append(strBuffLane);
 			}
 			
-			strBuffParking.append(strBuffLane.append("\\n"));
+			return strBuffParking.toString();
+			
 		}
 		
-		return strBuffParking.toString();
+		return "";
 	}
 	
 	private char printBay(Integer parkingSize, ParkingBay parkingBay) {

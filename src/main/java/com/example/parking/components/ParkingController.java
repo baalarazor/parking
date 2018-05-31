@@ -40,14 +40,8 @@ public class ParkingController {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAvailableBays(@PathParam("id") Long id) {
-		Optional<Parking> parkingOpt = service.getParkingById(id);
-		if(parkingOpt.isPresent()) {
-			Parking parking = parkingOpt.get();
-			long free = service.getAvailableBays(parking);
-			return Response.ok(free).build();
-		}else {
-			return Response.noContent().build();
-		}
+		long free = service.getAvailableBays(id);
+		return Response.ok(free).build();
 	}
 	
 	@PUT
@@ -70,13 +64,7 @@ public class ParkingController {
 	@Path("/{id}/print")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response print(@PathParam("id") Long id) {
-		Optional<Parking> parkingOpt = service.getParkingById(id);
-		if(parkingOpt.isPresent()) {
-			Parking parking = parkingOpt.get();
-			String parkingMap = service.printParking(parking);
-			return Response.ok(parkingMap).build();
-		}
-		
-		return Response.noContent().build();
+		String parkingMap = service.printParking(id);
+		return Response.ok(parkingMap).build();
 	}
 }

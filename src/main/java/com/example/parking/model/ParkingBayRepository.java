@@ -8,6 +8,5 @@ public interface ParkingBayRepository extends JpaRepository<ParkingBay, Long>{
 	
 	int countByParkingIdAndPedestrianExitFalseAndParkedCarNull(Long id);
 	ParkingBay findByParkingIdAndIndex(Long id, Integer index);
-	
 
 }

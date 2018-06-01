@@ -34,7 +34,7 @@ public class ParkingBay {
 	
 	private char parkedCar;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity = Parking.class)
 	@JoinColumn(name="id")
 	@JsonIgnore
 	private Parking parking;

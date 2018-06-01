@@ -10,6 +10,7 @@ It auses Basic Auth to secure the services. The existing users are:
 - Password: password
 - Roles: USER
 
+
 - User: admin
 - Password: admin
 - Roles: ADMIN

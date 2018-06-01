@@ -2,7 +2,39 @@
 Parking management with Spring Boot
 
 This is a Spring Boot application example based on a parking. This application provides some REST services for simple
-operations like park and unpark a car. All operations are described in detail below. The persistence is implemented using an in-memory database with h2.
+operations like park and unpark a car. All operations are described in detail below.
+The persistence is implemented using an in-memory database with h2.
+It auses Basic Auth to secure the services. The existing users are:
+
+- User: user
+- Password: password
+- Roles: USER
+
+- User: admin
+- Password: admin
+- Roles: ADMIN
+
+## Build
+
+Application uses Maven as build system, so in order to generate the executable JAR file you only need to execute:
+
+```bash
+$ mvn package
+```
+
+The executable file can be found at `[...]/target/parking-1.0.0.jar`.
+
+
+## Run
+
+You can run the server with the following command:
+
+```bash
+$ java -jar parking-1.0.0.jar
+```
+
+Server will start listening on port `8080`. Example [http://localhost:8080]().
+
 
 ## Operations
 [Create parking](#create-parking)  
@@ -131,6 +163,19 @@ Once an end of lane is reached, then the next lane is reversed (to represent the
   None
 
 The complete API Rest definition is in [Swagger definition](./parking-swagger.yaml)
+
+## Tests
+
+The repo contains unit test files (Unitary and Integration test).
+
+In order to run Maven integrated tests, run the following command:
+
+```bash
+$ mvn clean verify
+```
+Also, you can test all endpoints with the given Postman collection:
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/87fe92bb795ecfdf6e3c)
 
 ## Nice to have (not implemented yet)
 - Logging

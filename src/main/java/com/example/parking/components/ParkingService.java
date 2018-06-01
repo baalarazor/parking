@@ -22,6 +22,12 @@ public class ParkingService {
 	@Autowired
 	private ParkingBayRepository parkingBayRepository;
 	
+	/**
+	 * Creates a new Parking with the provided configuration
+	 * 
+	 * @param parkingData
+	 * @return a new Parking
+	 */
 	public Parking createParking(ParkingData parkingData) {
 		
 		ParkingBuilder parkingBuilder = new ParkingBuilder().withSquareSize(parkingData.getSize());
@@ -40,14 +46,33 @@ public class ParkingService {
 		return parking;
 	}
 	
+	/**
+	 * Gets the parking with the provided id from DB
+	 * 
+	 * @param id
+	 * @return Parking
+	 */
 	public Optional<Parking> getParkingById(Long id) {
 		return parkingRepository.findById(id);
 	}
 	
+	/**
+	 * Get number of availbale bays of the specified parking
+	 * 
+	 * @param parking
+	 * @return
+	 */
 	public long getAvailableBays(Parking parking) {
 		return parking.getBays().stream().filter(pb -> pb.isAvailable()).count();
 	}
 	
+	/**
+	 * Get first available bay of the parking for a car of carType
+	 * 
+	 * @param parkingId
+	 * @param carType
+	 * @return
+	 */
 	private Integer getFirstAvailableBay(Long parkingId, char carType) {
 		 Optional<Parking> parkingOpt = parkingRepository.findById(parkingId);
 		 if(parkingOpt.isPresent()) {
@@ -61,6 +86,12 @@ public class ParkingService {
 		 return -1;
 	}
 	
+	/**
+	 * Park a car of the given type
+	 * @param parking
+	 * @param carType
+	 * @return
+	 */
 	public Integer parkCar(Parking parking, char carType) {
 		Integer indexToPark = getFirstAvailableBay(parking.getId(), carType);
 		if(indexToPark > 0) {
@@ -74,6 +105,12 @@ public class ParkingService {
 		return indexToPark;
 	}
 	
+	/**
+	 * Unpark a car from the given index
+	 * @param parking
+	 * @param index
+	 * @return
+	 */
 	public boolean unparkCar(Parking parking, Integer index) {
 		Optional<ParkingBay> parkingBayOpt = parking.getBays().stream().filter(pb -> pb.getIndex().equals(index)).findFirst();
 		if(parkingBayOpt.isPresent()) {
@@ -89,6 +126,11 @@ public class ParkingService {
 		return false;
 	}
 	
+	/**
+	 * Generates a String representation of the parking
+	 * @param parking
+	 * @return
+	 */
 	public String printParking(Parking parking) {
 
 		StringBuffer strBuffParking = new StringBuffer();

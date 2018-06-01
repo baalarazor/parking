@@ -5,6 +5,11 @@ This is a Spring Boot application example based on a parking. This application p
 operations like park and unpark a car. All operations are described in detail below. The persistence is implemented using an in-memory database with h2.
 
 ## Operations
+[Create parking](#create-parking)  
+[Park car](#park-car)  
+[Unpark car](#unpark-car)  
+[Print parking](#print-parking)  
+
 ### Create parking
 Creates a new parking with the given configuration.
 
@@ -49,7 +54,7 @@ Gets the number of available parking bays left
 
   None
 
-### Park a car
+### Park car
 Parks a car of the given type ('D' being dedicated to disabled people) in closest -to pedestrian exit- and first (starting from the parking's entrance)
 available bay. Disabled people can only park on dedicated bays.
 
@@ -72,7 +77,7 @@ available bay. Disabled people can only park on dedicated bays.
 
   None
 
-### Unpark a car
+### Unpark car
 Unparks the car from the given index
 
 * **URL**
